@@ -34,16 +34,15 @@ void getUser(User* user)
 		size = ftell(pFile);
 		fclose(pFile);
 	}
-
-	HANDLE file = CreateFile(L"Users.csv", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE file = CreateFile(L"Users.csv", GENERIC_READ, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (file == INVALID_HANDLE_VALUE) //Проверка неоткрывается ли файл
 	{
 		MessageBox(NULL, L"Ошибка, нельзя открыть файл", L"Оповещение", MB_OK);
 		return;
 	}
-	DWORD countFileSymbols;
+	DWORD bytes;
 	LPCSTR storoka = calloc(size, sizeof(char));
-	if (!ReadFile(file, storoka, size, &countFileSymbols, NULL)) 
+	if (!ReadFile(file, storoka, size, &bytes, NULL)) 
 	{
 		return 0;
 	}
@@ -69,36 +68,36 @@ void getUser(User* user)
 
 void searchUser(User* user, char* whoFind)
 {
-	User* userfind = malloc(sizeof(User));
-	User* poiskSurName;
-	int j = 0, countOfRows = 1;
-	for (int i = 0; i < 100; i++)
+	User* userfind = calloc(1,sizeof(User));
+
+	int countAllUsers = 0;
+	int countFindUsers = 0;
+	while (user[countAllUsers].surname)
 	{
-		if (strstr(user[i].surname, whoFind) != NULL)
+		if (strstr(user[countAllUsers].surname, whoFind) != NULL)
 		{
-			userfind[j] = user[i];
-			poiskSurName = realloc(userfind, (j + 2) * sizeof(User));
-			j++;
-			userfind = poiskSurName;
+			userfind[countFindUsers] = user[countAllUsers];
+			userfind = realloc(userfind, (countFindUsers+ 2) * sizeof(User));
+			countFindUsers++;
 		}
+		countAllUsers++;
 	}
-	writeUser(userfind, j);
+	writeUser(userfind, countFindUsers);
 }
-void writeUser(User* user, int countCurrent)
+void writeUser(User* user, int countFindUser)
 {
-	HANDLE Search = CreateFile(L"UsersSearch.csv", GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL, NULL);
-	DWORD countFileSymbols;
-	float averageAge = 0;
+	HANDLE file = CreateFile(L"UsersSearch.csv", GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL, NULL);
+	DWORD bytes;
+	float allage = 0;
 	char* dataForWritting = calloc(100, sizeof(char));
-	for (int i = 0; i < countCurrent; i++)
+	for (int i = 0; i < countFindUser; i++)
 	{
 		sprintf(dataForWritting, "%s;%s;%s;%d\n", user[i].surname, user[i].name, user[i].middlename, user[i].age);
-		WriteFile(Search, dataForWritting, strlen(dataForWritting), &countFileSymbols, NULL);
-		averageAge += user[i].age;
+		WriteFile(file, dataForWritting, strlen(dataForWritting), &bytes, NULL);
+		allage += user[i].age;
 	}
-	averageAge /= countCurrent;
-	sprintf(dataForWritting, "Средний возраст: %f", averageAge);
-	WriteFile(Search, dataForWritting, strlen(dataForWritting), &countFileSymbols, NULL);
-	free(dataForWritting);
-	CloseHandle(Search);
+	allage /= countFindUser;
+	sprintf(dataForWritting, "Средний возраст: %f", allage);
+	WriteFile(file, dataForWritting, strlen(dataForWritting), &bytes, NULL);
+	CloseHandle(file);
 }
