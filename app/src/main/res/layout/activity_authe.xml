@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/bg"
+    android:padding="40dp">
+    <RelativeLayout
+        android:id="@+id/maun"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Авторизация"
+            android:textColor="@color/text"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:textSize="38sp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_t"
+            android:layout_width="359dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/login"
+            android:layout_marginTop="70dp"
+            android:textColorHint="@color/text">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@id/login_t"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Электронная почта или телефон"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry,TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pass_t"
+            android:layout_width="359dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/login_t"
+            android:layout_marginTop="17dp"
+            android:textColorHint="@color/text"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/text">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@id/pass_t"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Пароль"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry,TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:textSize="18sp"
+            android:layout_below="@+id/pass_t"
+            android:layout_marginTop="14dp"
+            android:layout_alignEnd="@id/login_t"
+            android:text="Забыли пароль?">
+        </TextView>
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/forget"
+            android:layout_alignStart="@id/pass_t" />
+        <TextView
+            android:id="@+id/textview"
+            android:paddingTop="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textColor="@color/text"
+            android:textSize="18sp"
+            android:text="Запомнить пароль"
+            android:layout_below="@id/forget"
+            android:layout_toEndOf="@+id/checkbox" />
+        <Button
+            android:id="@+id/btnlogin"
+            android:layout_width="match_parent"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/text"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview"
+            android:text="Авторизироваться"
+            android:textAllCaps="false" />
+    </RelativeLayout>
+</RelativeLayout>
