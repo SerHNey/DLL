@@ -35,7 +35,7 @@ void getUser(User* user)
 		fclose(pFile);
 	}
 	HANDLE file = CreateFile(L"Users.csv", GENERIC_READ, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	if (file == INVALID_HANDLE_VALUE) //Проверка неоткрывается ли файл
+	if (file == INVALID_HANDLE_VALUE)
 	{
 		MessageBox(NULL, L"Ошибка, нельзя открыть файл", L"Оповещение", MB_OK);
 		return;
@@ -44,6 +44,7 @@ void getUser(User* user)
 	LPCSTR storoka = calloc(size, sizeof(char));
 	if (!ReadFile(file, storoka, size, &bytes, NULL)) 
 	{
+		MessageBox(NULL, L"Ошибка чтения", L"Оповещение", MB_OK);
 		return 0;
 	}
 	CloseHandle(file);
@@ -84,20 +85,22 @@ void searchUser(User* user, char* whoFind)
 	}
 	writeUser(userfind, countFindUsers);
 }
+
+
 void writeUser(User* user, int countFindUser)
 {
 	HANDLE file = CreateFile(L"UsersSearch.csv", GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL, NULL);
 	DWORD bytes;
-	float allage = 0;
-	char* dataForWritting = calloc(100, sizeof(char));
+	float avg = 0;
+	char* dataForWritting = calloc(1000, sizeof(char));
 	for (int i = 0; i < countFindUser; i++)
 	{
 		sprintf(dataForWritting, "%s;%s;%s;%d\n", user[i].surname, user[i].name, user[i].middlename, user[i].age);
 		WriteFile(file, dataForWritting, strlen(dataForWritting), &bytes, NULL);
-		allage += user[i].age;
+		avg += user[i].age;
 	}
-	allage /= countFindUser;
-	sprintf(dataForWritting, "Средний возраст: %f", allage);
+	avg /= countFindUser;
+	sprintf(dataForWritting, "Средний возраст: %f", avg);
 	WriteFile(file, dataForWritting, strlen(dataForWritting), &bytes, NULL);
 	CloseHandle(file);
 }

@@ -16,4 +16,3 @@ __declspec(dllimport) void getUser(User* user);
 __declspec(dllimport) void searchUser(User* user, char* whoFind);
 __declspec(dllimport) void writeUser(User* user, int countCurrent);
 
-typedef int(_cdecl* forReadData)(User*);

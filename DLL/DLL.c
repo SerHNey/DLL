@@ -5,10 +5,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	HINSTANCE hMyDLL;
 	if ((hMyDLL = LoadLibrary(PATH)) == NULL) return 1;
 	getUser getuser = (getUser)GetProcAddress(hMyDLL, "getUser");
-	searchUser searchuser = (getUser)GetProcAddress(hMyDLL, "searchUser");
+	searchUser searchuser = (searchUser)GetProcAddress(hMyDLL, "searchUser");
 	User* user = calloc(1000, sizeof(User));
 		getuser(user);
-		searchuser(user, "Морозова");
+		searchuser(user, "Иванов");
 	FreeLibrary(hMyDLL);
 	return 0;
 }
