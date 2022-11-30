@@ -3,16 +3,6 @@
 #include <Windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+__declspec(dllimport) int simplenum(int a, int b);
 
-typedef struct User
-{
-	char* surname;
-	char* name;
-	char* middlename;
-	int age;
-}User;
-
-__declspec(dllimport) void getUser(User* user);
-__declspec(dllimport) void searchUser(User* user, char* whoFind);
-__declspec(dllimport) void writeUser(User* user, int countCurrent);
-
+__declspec(dllimport) int hTread(int a, int b, int countHtread);

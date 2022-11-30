@@ -2,14 +2,6 @@
 #include <windows.h>
 #include <stdio.h>
 #define PATH L"DLLCode.dll"
-typedef int(_cdecl* getUser)(struct MyStruct*);
-typedef int(_cdecl* searchUser)(struct MyStruct*);
-
-typedef struct User
-{
-	char* surname;
-	char* name;
-	char* middlename;
-	int age;
-}User;
+typedef int(_cdecl* Simple)(int a, int b);
+typedef int(_cdecl* SimplehTread)(int a, int b, int countHtread);
 
