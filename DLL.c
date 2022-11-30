@@ -7,7 +7,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Simple simple = (Simple)GetProcAddress(hMyDLL, "simplenum");
 	simple(0, 107);
 	SimplehTread simplehTread = (SimplehTread)GetProcAddress(hMyDLL, "hTread");
-	simplehTread(0, 107, 2);
+	simplehTread(0, 10, 1);
 	FreeLibrary(hMyDLL);
 	return 0;
 }

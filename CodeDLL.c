@@ -1,5 +1,8 @@
 #include "HeaderDLL.h"
+CRITICAL_SECTION crit;
+PCRITICAL_SECTION pcrit = &crit;
 
+int v = 0;
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
@@ -44,7 +47,7 @@ int simplenum(int a, int b)
 	return count;
 }
 
-int simplenum2(int param[])
+void simplenum2(int param[])
 {
 	int a = param[0];
 	int b = param[1];
@@ -52,9 +55,11 @@ int simplenum2(int param[])
 	for (size_t i = a; i <= b; i++)
 	{
 		if (isPrime(i))
-			count++;
+
+			v++;		
 	}
-	return count;
+	count = v;
+	ExitThread(v);
 }
 
 
@@ -62,17 +67,17 @@ int hTread(int a, int b, int countHtread) {
 	int param[2];
 	param[0] = a;
 	param[1] = b;
+	int range = b - a;
+	int d = range / countHtread;
 	int count = 0;
-	HANDLE hTread = calloc(countHtread + 1, sizeof(HANDLE));
+	HANDLE hTread[100];
+	InitializeCriticalSection(pcrit);
+	for (size_t i = 0; i < countHtread; i++)
+	{
+		hTread[i] = CreateThread(NULL, 0, simplenum2, param, 0, count);
+	}	
+	DeleteCriticalSection(pcrit);
+	WaitForMultipleObjects(countHtread, hTread, TRUE, INFINITE);
 
-	HANDLE hTread1 = CreateThread(NULL, 0, simplenum2, param, 0, count);
-
-	WaitForSingleObject(hTread1, INFINITE);
-	//for (size_t i = 0; i < countHtread; i++)
-	//{
-	//	hTread = CreateThread(NULL, 0, simplenum2, param, 0, count);
-	//}	
-
-	//WaitForMultipleObjects(countHtread, hTread, TRUE, INFINITE);
 
 }
