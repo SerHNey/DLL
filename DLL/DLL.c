@@ -1,14 +1,16 @@
 ﻿#include "HeaderMain.h"
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int main()
 {
 	HINSTANCE hMyDLL;
 	if ((hMyDLL = LoadLibrary(PATH)) == NULL) return 1;
-	getUser getuser = (getUser)GetProcAddress(hMyDLL, "getUser");
-	searchUser searchuser = (searchUser)GetProcAddress(hMyDLL, "searchUser");
-	User* user = calloc(1000, sizeof(User));
-		getuser(user);
-		searchuser(user, "Иванов");
+	getSize getSqize = (getSize)GetProcAddress(hMyDLL, "getSize");
+	cord* cord = malloc(sizeof(cord));
+	cord->point1.X = 2;
+	cord->point1.Y = 1;
+	cord->point2.X = 6;
+	cord->point2.Y = 4;
+	double result = getSqize(cord);
 	FreeLibrary(hMyDLL);
 	return 0;
 }

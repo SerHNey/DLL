@@ -2,14 +2,10 @@
 #include <windows.h>
 #include <stdio.h>
 #define PATH L"DLLCode.dll"
-typedef int(_cdecl* getUser)(struct MyStruct*);
-typedef int(_cdecl* searchUser)(struct MyStruct*);
+typedef double(_cdecl* getSize)(struct cord*);
 
-typedef struct User
-{
-	char* surname;
-	char* name;
-	char* middlename;
-	int age;
-}User;
+typedef struct coordinats {
+	COORD point1;
+	COORD point2;
+}cord;
 

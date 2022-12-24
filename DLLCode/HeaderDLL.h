@@ -2,17 +2,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <math.h>
 
-typedef struct User
-{
-	char* surname;
-	char* name;
-	char* middlename;
-	int age;
-}User;
+typedef struct coordinats {
+	COORD point1;
+	COORD point2;
+}cord;
+__declspec(dllimport) double getSize(cord* cord);
 
-__declspec(dllimport) void getUser(User* user);
-__declspec(dllimport) void searchUser(User* user, char* whoFind);
-__declspec(dllimport) void writeUser(User* user, int countCurrent);
 
